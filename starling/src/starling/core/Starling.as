@@ -185,7 +185,7 @@ package starling.core
     public class Starling extends EventDispatcher
     {
         /** The version of the Starling framework. */
-        public static const VERSION:String = "1.6.1";
+        public static const VERSION:String = "1.7";
         
         /** The key for the shader programs stored in 'contextData' */
         private static const PROGRAM_DATA_NAME:String = "Starling.programs"; 
@@ -1098,11 +1098,15 @@ package starling.core
         }
         
         /** Indicates if the Context3D object is currently valid (i.e. it hasn't been lost or
-         *  disposed). Beware that each call to this method causes a String allocation (due to
-         *  internal code Starling can't avoid), so do not call this method too often. */
+         *  disposed). */
         public function get contextValid():Boolean
         {
-            return mContext && mContext.driverInfo != "Disposed";
+            if (mContext)
+            {
+                const driverInfo:String = mContext.driverInfo;
+                return driverInfo != null && driverInfo != "" && driverInfo != "Disposed";
+            }
+            else return false;
         }
 
         // static properties
